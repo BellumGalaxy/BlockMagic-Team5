@@ -1,27 +1,66 @@
-# BlockMagic-Team5
+## Foundry
 
-<p align="center"> Chainlink BlockMagic Hackathon </p>
+**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
-### Links
-- Link do pitch [Nome](link)
-- Link do site demo [Nome](link)
-- Link para a apresentação [Nome](link)
+Foundry consists of:
 
-### Summary
-1. Introduction
-   1. bla bla
-2. Seu projeto
-   1. bla bla
-3. Ferramentas usadas
-   1. bla bla
-4. Chainlink Tools
-5. Operação - Como funciona o seu projeto
-6. Projeção - Cálculo de Custo
-7. Evolução do Projeto - O que vocês pensam para o futuro
-8. Conclusão
-9. Sessão de Desenvolvedor
-   1.  Contratos
-   2.  Blockchains Usadas
-   3.  Tools
-   4.  API's
-       1.  Pode sugerir o teste direto usando a Thunder Client do VsCode
+-   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
+-   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
+-   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
+-   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+
+## Documentation
+
+https://book.getfoundry.sh/
+
+## Usage
+
+### Build
+
+```shell
+$ forge build
+```
+
+### Test
+
+```shell
+$ forge test
+```
+
+### Format
+
+```shell
+$ forge fmt
+```
+
+### Gas Snapshots
+
+```shell
+$ forge snapshot
+```
+
+### Anvil
+
+```shell
+$ anvil
+```
+
+### Deploy
+
+```shell
+$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```
+
+### Cast
+
+```shell
+$ cast <subcommand>
+```
+
+### Help
+
+```shell
+$ forge --help
+$ anvil --help
+$ cast --help
+```
