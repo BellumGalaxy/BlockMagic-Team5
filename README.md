@@ -1,66 +1,73 @@
-## Foundry
+# MyJourneyNFT Smart Contract
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Descrição
 
-Foundry consists of:
+O contrato `MyJourneyNFT` é um contrato inteligente que emite NFTs (tokens não fungíveis) representando diferentes etapas educacionais de um aluno. Este contrato utiliza ERC721 para a emissão de NFTs, Chainlink Functions para a execução de funções fora da cadeia e AccessControl para gerenciamento de permissões.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Funcionalidades Principais
 
-## Documentation
+### Emissão de NFTs
 
-https://book.getfoundry.sh/
+1. **issueNFT**: Emite um NFT para um aluno em uma determinada etapa educacional (Fundamental, Ensino Médio ou Universidade).
+2. **issueNFTForStage**: Emite um NFT para uma etapa educacional específica se o aluno ainda não tiver um NFT para essa etapa.
 
-## Usage
+### Gerenciamento de Alunos
 
-### Build
+1. **addStudent**: Adiciona um novo aluno ao contrato.
+2. **getStudentByAddress**: Retorna os detalhes de um aluno com base no endereço.
 
-```shell
-$ forge build
-```
+### Gerenciamento de Administradores e Instituições Financeiras
 
-### Test
+1. **addAdministrator**: Adiciona um novo administrador.
+2. **removeAdministrator**: Remove um administrador existente.
+3. **addFinancialInstitution**: Adiciona uma nova instituição financeira autorizada a emitir NFTs.
+4. **removeFinancialInstitution**: Remove uma instituição financeira.
 
-```shell
-$ forge test
-```
+### Configuração de Metadados de NFTs
 
-### Format
+1. **setNFTMetadataURI**: Define o URI dos metadados de um NFT específico.
 
-```shell
-$ forge fmt
-```
+### Funções Chainlink
 
-### Gas Snapshots
+1. **sendReponse**: Envia uma solicitação ao Chainlink Functions para executar código JavaScript fora da cadeia e obter uma resposta.
+2. **fulfillRequest**: Função de callback que trata a resposta de uma solicitação Chainlink.
 
-```shell
-$ forge snapshot
-```
+## Estrutura do Contrato
 
-### Anvil
+### Variáveis de Armazenamento
 
-```shell
-$ anvil
-```
+- `s_tokenIdCounter`: Contador de IDs de tokens.
+- `s_students`: Mapeamento de endereços de alunos para suas informações.
+- `s_studentEducationStage`: Mapeamento de endereços de alunos para suas etapas educacionais.
+- `s_stageNFTLinks`: Mapeamento de etapas educacionais para links de NFTs.
+- `s_financialInstitutions`: Mapeamento de endereços de instituições financeiras autorizadas.
+- `s_administrators`: Mapeamento de endereços de administradores.
+- `s_lastRequestId`: ID da última solicitação Chainlink.
+- `s_lastResponse`: Última resposta recebida do Chainlink.
+- `s_lastError`: Último erro recebido do Chainlink.
 
-### Deploy
+### Variáveis Imutáveis
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+- `i_router_add`: Endereço do roteador Chainlink Functions.
 
-### Cast
+### Constantes
 
-```shell
-$ cast <subcommand>
-```
+- `MINTER_ROLE`: Papel de minter.
+- `DON_ID`: ID do oracle descentralizado.
+- `GAS_LIMIT`: Limite de gás para callbacks.
 
-### Help
+### Eventos
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- `NFTIssued`: Emitido quando um NFT é emitido para um aluno.
+
+### Modificadores
+
+- `onlyFinancialInstitution`: Verifica se o chamador é uma instituição financeira autorizada.
+- `onlyAdministrator`: Verifica se o chamador é um administrador.
+
+## Como Usar
+
+### Emissão de um NFT
+
+```solidity
+function issueNFT(address _studentAddress) external onlyFinancialInstitution
