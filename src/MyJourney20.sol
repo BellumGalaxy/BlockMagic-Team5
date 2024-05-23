@@ -3,17 +3,16 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import {FunctionsClient} from "@chainlink/src/v0.8/functions/dev/v1_0_0/FunctionsClient.sol";
-import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/dev/v1_0_0/libraries/FunctionsRequest.sol";
+import {FunctionsClient} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/FunctionsClient.sol";
+import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol";
 
 
 contract MyJourney20 is ERC721URIStorage, AccessControl, FunctionsClient {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     using FunctionsRequest for FunctionsRequest.Request;
-    using Counters for Counters.Counter;
-    Counters.Counter public s_tokenIdCounter;
+
+    uint256 public s_tokenIdCounter;
 
     enum EducationStage { 
         Fundamental, 
